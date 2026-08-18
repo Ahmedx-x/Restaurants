@@ -1,6 +1,28 @@
-@Restaurants.API_HostAddress = http://localhost:5203
+@Restaurants.API_HostAddress = https://localhost:7067
 
-GET {{Restaurants.API_HostAddress}}/weatherforecast/
-Accept: application/json
+
+GET {{Restaurants.API_HostAddress}}/api/restaurants
+
+###
+
+
+GET {{Restaurants.API_HostAddress}}/api/restaurants/1:int
+
+###
+
+POST {{Restaurants.API_HostAddress}}/api/restaurants
+Content-Type: application/json
+
+{
+  "Name": "El",
+  "Description": "Shawarma restaurant",
+  "Category": "Fast food",
+  "HasDelivery": true, 
+  "City": "Shebin elkom",
+  "Street": "Paris street",
+  "PostalCode": "54321",
+  "ContactEmail": "demshqy@rest.com",
+  "ContactNumber": "015464645464" 
+}
 
 ###
