@@ -17,14 +17,13 @@ namespace Restaurants.Infrastructure.Repositories
         public async Task<int> AddAsync(Restaurant restaurant)
         {
             await _dbContext.AddAsync(restaurant);
-            await _dbContext.SaveChangesAsync();
+
             return restaurant.Id;
         }
 
         public async Task<IReadOnlyList<Restaurant>> GetAllAsync()
         {
             var restaurants = await _dbContext.Restaurants.ToListAsync();
-
 
             return restaurants;
         }
@@ -36,6 +35,25 @@ namespace Restaurants.Infrastructure.Repositories
                 .FirstOrDefaultAsync(r => r.Id == id);
 
             return restaurant;
+        }
+
+        public Task DeleteAsync(Restaurant restaurant)
+        {
+            _dbContext.Restaurants.Remove(restaurant);
+
+            return Task.CompletedTask;
+        }
+
+        public async Task DeleteByIdAsync(int id)
+        {
+            var restaurnt = await _dbContext.Restaurants.FirstOrDefaultAsync(r => r.Id == id);
+            if (restaurnt != null)
+                await DeleteAsync(restaurnt);
+        }
+
+        public async Task SaveChanges()
+        {
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

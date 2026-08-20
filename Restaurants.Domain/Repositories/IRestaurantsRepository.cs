@@ -7,5 +7,8 @@ namespace Restaurants.Domain.Repositories
         Task<IReadOnlyList<Restaurant>> GetAllAsync();
         Task<Restaurant?> GetByIdAsync(int id);
         Task<int> AddAsync(Restaurant restaurant);
+        Task DeleteByIdAsync(int id);
+        Task DeleteAsync(Restaurant restaurant);
+        Task SaveChanges();
     }
 }

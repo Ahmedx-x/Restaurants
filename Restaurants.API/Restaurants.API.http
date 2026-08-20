@@ -6,7 +6,7 @@ GET {{Restaurants.API_HostAddress}}/api/restaurants
 ###
 
 
-GET {{Restaurants.API_HostAddress}}/api/restaurants/1:int
+GET {{Restaurants.API_HostAddress}}/api/restaurants/5:int
 
 ###
 
@@ -22,6 +22,28 @@ Content-Type: application/json
   "Street": "Paris street",
   "PostalCode": "54321",
   "ContactEmail": "demshqy@rest.com",
+  "ContactNumber": "015464645464" 
+}
+
+###
+
+DELETE {{Restaurants.API_HostAddress}}/api/restaurants/6
+
+###
+
+POST {{Restaurants.API_HostAddress}}/api/restaurants/update
+Content-Type: application/json
+
+{
+  "Id": 5,
+  "Name": "Elshabrawy",
+  "Description": "Falafel restaurant",
+  "Category": "Indian",
+  "HasDelivery": true, 
+  "City": "Shebin elkom",
+  "Street": "Paris street",
+  "PostalCode": "54321",
+  "ContactEmail": "shabrawy@rest.com",
   "ContactNumber": "015464645464" 
 }
 
