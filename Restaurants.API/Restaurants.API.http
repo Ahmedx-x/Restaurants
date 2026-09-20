@@ -6,7 +6,7 @@ GET {{Restaurants.API_HostAddress}}/api/restaurants
 ###
 
 
-GET {{Restaurants.API_HostAddress}}/api/restaurants/5:int
+GET {{Restaurants.API_HostAddress}}/api/restaurants/1:int
 
 ###
 
@@ -14,9 +14,9 @@ POST {{Restaurants.API_HostAddress}}/api/restaurants
 Content-Type: application/json
 
 {
-  "Name": "El",
-  "Description": "Shawarma restaurant",
-  "Category": "Fast food",
+  "Name": "malek elkebda",
+  "Description": "Kebda restaurant",
+  "Category": "Egyptian",
   "HasDelivery": true, 
   "City": "Shebin elkom",
   "Street": "Paris street",

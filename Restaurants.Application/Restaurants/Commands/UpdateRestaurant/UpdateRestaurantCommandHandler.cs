@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Restaurants.Domain.Entities;
+using Restaurants.Domain.Exceptions;
 using Restaurants.Domain.Repositories;
 
 namespace Restaurants.Application.Restaurants.Commands.UpdateRestaurant
@@ -22,14 +24,10 @@ namespace Restaurants.Application.Restaurants.Commands.UpdateRestaurant
         }
         public async Task<Unit> Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Update restaurant");
+            _logger.LogInformation("Updating restaurant {@Restaurant}", request);
 
-            var restaurant = await _restaurants.GetByIdAsync(request.Id);
-            if (restaurant == null)
-            {
-                _logger.LogError("this restaurant not exist!");
-                return Unit.Value;
-            }
+            var restaurant = await _restaurants.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException(nameof(Restaurant), request.Id.ToString());
 
             _mapper.Map(request, restaurant);
             await _restaurants.SaveChanges();

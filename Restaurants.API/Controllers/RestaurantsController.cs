@@ -20,6 +20,7 @@ namespace Restaurants.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             var command = new GetAllRestaurantsQuery();
@@ -29,17 +30,18 @@ namespace Restaurants.API.Controllers
         }
 
         [HttpGet("{id}:int")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var command = new GetRestaurantQuery(id);
             var restaurant = await _mediator.Send(command);
-            if (restaurant == null)
-                return NotFound();
 
             return Ok(restaurant);
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> AddRestaurant(CreateRestaurantCommand command)
         {
             int id = await _mediator.Send(command);
@@ -48,6 +50,7 @@ namespace Restaurants.API.Controllers
         }
 
         [HttpPost("update")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateRestaurant(UpdateRestaurantCommand command)
         {
             await _mediator.Send(command);
@@ -56,6 +59,7 @@ namespace Restaurants.API.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteRestaurant([FromRoute] int id)
         {
             var command = new DeleteRestaurantCommand(id);
