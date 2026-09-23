@@ -48,3 +48,28 @@ Content-Type: application/json
 }
 
 ###
+
+@restaurantId=0
+POST {{Restaurants.API_HostAddress}}/api/restaurants/2/dishes
+Content-Type: application/json
+
+{
+  "Name": "Spaghetti Bolognese",
+  "Description": "Classic Italian Pasta dish with rich meat sauce",
+  "Price": 10,
+  "KiloCalories": 750
+}
+
+###
+
+GET {{Restaurants.API_HostAddress}}/api/restaurants/2/dishes
+
+###
+@dishId=0
+GET {{Restaurants.API_HostAddress}}/api/restaurants/2/dishes/3
+
+###
+
+DELETE {{Restaurants.API_HostAddress}}/api/restaurants/2/dishes
+
+###
