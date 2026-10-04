@@ -51,6 +51,12 @@ namespace Restaurants.Infrastructure.Repositories
                 await DeleteAsync(restaurnt);
         }
 
+        public async Task<int> CountByOwnerIdAsync(string userId)
+        {
+            var count = await _dbContext.Restaurants.CountAsync(r => r.OwnerId == userId);
+            return count;
+        }
+
         public async Task SaveChanges()
         {
             await _dbContext.SaveChangesAsync();

@@ -19,7 +19,7 @@ namespace Restaurants.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [AllowAnonymous]
+        [Authorize(Policy = PolicyNames.AtLeastOwnedTwoRestaurants)]
         public async Task<IActionResult> GetAll()
         {
             var command = new GetAllRestaurantsQuery();

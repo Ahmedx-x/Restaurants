@@ -9,6 +9,7 @@ namespace Restaurants.Domain.Repositories
         Task<int> AddAsync(Restaurant restaurant);
         Task DeleteByIdAsync(int id);
         Task DeleteAsync(Restaurant restaurant);
+        Task<int> CountByOwnerIdAsync(string userId);
         Task SaveChanges();
     }
 }
