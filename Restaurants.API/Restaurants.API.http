@@ -78,8 +78,8 @@ DELETE {{Restaurants.API_HostAddress}}/api/restaurants/2/dishes
 POST {{Restaurants.API_HostAddress}}/api/identity/register
 Content-Type: application/json
 {
-  "Email": "test@rest.com",
-  "Password": "Test@123"
+  "Email": "ali@rest.com",
+  "Password": "Owner@123"
 }
 
 ###

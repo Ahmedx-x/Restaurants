@@ -6,6 +6,8 @@ using Restaurants.Application.Restaurants.Commands.DeleteRestaurant;
 using Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
 using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Application.Restaurants.Queries.GetRestaurant;
+using Restaurants.Domain.Constants;
+using Restaurants.Infrastructure.Authorization;
 
 namespace Restaurants.API.Controllers
 {
@@ -27,6 +29,7 @@ namespace Restaurants.API.Controllers
         }
 
         [HttpGet("{id}:int")]
+        [Authorize(Policy = PolicyNames.HasNationality)]       // Policy-based authorization
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById([FromRoute] int id)
@@ -38,6 +41,7 @@ namespace Restaurants.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRoles.Owner)]   // Role-based authorization
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> AddRestaurant(CreateRestaurantCommand command)
         {

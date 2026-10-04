@@ -1,38 +1,32 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Restaurants.Domain.Constants;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Exceptions;
+using Restaurants.Domain.Interfaces;
 using Restaurants.Domain.Repositories;
 
 namespace Restaurants.Application.Restaurants.Commands.UpdateRestaurant
 {
-    public class UpdateRestaurantCommandHandler : IRequestHandler<UpdateRestaurantCommand, Unit>
+    public class UpdateRestaurantCommandHandler(
+        IRestaurantsRepository restaurantsRepository,
+        IMapper mapper,
+        ILogger<UpdateRestaurantCommandHandler> logger,
+        IRestaurantAuthorizationService authorizationService) : IRequestHandler<UpdateRestaurantCommand>
     {
-        private readonly IRestaurantsRepository _restaurants;
-        private readonly IMapper _mapper;
-        private readonly ILogger<UpdateRestaurantCommandHandler> _logger;
-
-        public UpdateRestaurantCommandHandler(
-            IRestaurantsRepository restaurants,
-            IMapper mapper,
-            ILogger<UpdateRestaurantCommandHandler> logger)
+        public async Task Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
         {
-            _restaurants = restaurants;
-            _mapper = mapper;
-            _logger = logger;
-        }
-        public async Task<Unit> Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
-        {
-            _logger.LogInformation("Updating restaurant {@Restaurant}", request);
+            logger.LogInformation("Updating restaurant {@Restaurant}", request);
 
-            var restaurant = await _restaurants.GetByIdAsync(request.Id)
+            var restaurant = await restaurantsRepository.GetByIdAsync(request.Id)
                 ?? throw new NotFoundException(nameof(Restaurant), request.Id.ToString());
 
-            _mapper.Map(request, restaurant);
-            await _restaurants.SaveChanges();
+            if (!authorizationService.Authorize(restaurant, ResourceOperation.Update))
+                throw new ForbidException();
 
-            return Unit.Value;
+            mapper.Map(request, restaurant);
+            await restaurantsRepository.SaveChanges();
         }
     }
 }

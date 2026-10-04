@@ -16,6 +16,11 @@ namespace Restaurants.API.Middlewares
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 await context.Response.WriteAsync(ex.Message);
             }
+            catch (ForbidException)
+            {
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                await context.Response.WriteAsync("You do not have permission to access this resource.");
+            }
             catch (Exception ex)
             {
                 logger.LogError(ex, "An error occurred while processing the request.");

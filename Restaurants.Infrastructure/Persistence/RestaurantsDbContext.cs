@@ -4,12 +4,9 @@ using Restaurants.Domain.Entities;
 
 namespace Restaurants.Infrastructure.Persistence;
 
-public class RestaurantsDbContext : IdentityDbContext<User>
+public class RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> options)
+    : IdentityDbContext<User>(options)
 {
-    public RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> options)
-        : base(options)
-    {
-    }
 
     internal DbSet<Restaurant> Restaurants { get; set; }
     internal DbSet<Dish> Dishes { get; set; }
@@ -25,5 +22,10 @@ public class RestaurantsDbContext : IdentityDbContext<User>
             .HasMany(r => r.Dishes)
             .WithOne()
             .HasForeignKey(d => d.RestaurantId);
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.OwnedRestaurants)
+            .WithOne(r => r.Owner)
+            .HasForeignKey(r => r.OwnerId);
     }
 }
