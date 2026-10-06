@@ -1,6 +1,15 @@
 ﻿using MediatR;
+using Restaurants.Application.Common;
 using Restaurants.Application.Dtos.Restaurants;
+using Restaurants.Domain.Constants;
 
 namespace Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
 
-public record GetAllRestaurantsQuery : IRequest<IReadOnlyList<RestaurantDto>>;
+public class GetAllRestaurantsQuery : IRequest<PagedResult<RestaurantDto>>
+{
+    public string? SearchPhrase { get; set; }
+    public int PageNumber { get; set; } = 1;
+    public int PageSize { get; set; } = 5;
+    public string? SortBy { get; set; }
+    public SortType SortType { get; set; } = SortType.Ascending;
+}

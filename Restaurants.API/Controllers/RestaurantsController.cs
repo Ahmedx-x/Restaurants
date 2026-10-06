@@ -19,11 +19,11 @@ namespace Restaurants.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize(Policy = PolicyNames.AtLeastOwnedTwoRestaurants)]
-        public async Task<IActionResult> GetAll()
+        [AllowAnonymous]
+        // [Authorize(Policy = PolicyNames.AtLeastOwnedTwoRestaurants)]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllRestaurantsQuery query)
         {
-            var command = new GetAllRestaurantsQuery();
-            var restaurants = await _mediator.Send(command);
+            var restaurants = await _mediator.Send(query);
 
             return Ok(restaurants);
         }

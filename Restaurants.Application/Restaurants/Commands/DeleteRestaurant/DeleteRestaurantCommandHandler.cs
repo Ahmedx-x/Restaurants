@@ -24,7 +24,6 @@ namespace Restaurants.Application.Restaurants.Commands.DeleteRestaurant
                 throw new ForbidException();
 
             await restaurantsRepository.DeleteAsync(restaurant);
-            await restaurantsRepository.SaveChanges();
         }
     }
 }

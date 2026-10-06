@@ -1,4 +1,5 @@
-﻿using Restaurants.Domain.Entities;
+﻿using Restaurants.Domain.Constants;
+using Restaurants.Domain.Entities;
 
 namespace Restaurants.Domain.Repositories
 {
@@ -10,6 +11,8 @@ namespace Restaurants.Domain.Repositories
         Task DeleteByIdAsync(int id);
         Task DeleteAsync(Restaurant restaurant);
         Task<int> CountByOwnerIdAsync(string userId);
+        Task<(IReadOnlyList<Restaurant>, int)> GetAllMatchingAsync(
+            string? searchPhrase, int pageNumber, int pageSize, string? sortBy, SortType sortType);
         Task SaveChanges();
     }
 }

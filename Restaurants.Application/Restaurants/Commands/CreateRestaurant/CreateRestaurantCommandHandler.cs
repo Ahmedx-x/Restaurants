@@ -24,7 +24,6 @@ namespace Restaurants.Application.Restaurants.Commands.CreateRestaurant
             restaurant.OwnerId = currentUser.Id;
 
             int id = await restaurantsRepository.AddAsync(restaurant);
-            await restaurantsRepository.SaveChanges();
 
             return id;
         }
