@@ -16,5 +16,9 @@ public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaura
 
         RuleFor(dto => dto.ContactEmail)
             .EmailAddress().WithMessage("Please provide valid email address");
+
+        RuleFor(dto => dto.PostalCode)
+            .Matches(@"^\d{5}$")
+            .WithMessage("Postal code must be a 5-digit number");
     }
 }

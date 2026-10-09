@@ -13,9 +13,10 @@ public class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContex
     public CurrentUser GetCurrentUser()
     {
         var user = httpContextAccessor.HttpContext?.User;
+
         if (user == null)
         {
-            throw new UnauthorizedAccessException("User context is not available.");
+            throw new InvalidOperationException("User context is not available.");
         }
         if (user.Identity == null || !user.Identity.IsAuthenticated)
         {
