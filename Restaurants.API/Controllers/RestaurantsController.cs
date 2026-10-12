@@ -28,7 +28,7 @@ namespace Restaurants.API.Controllers
             return Ok(restaurants);
         }
 
-        [HttpGet("{id}:int")]
+        [HttpGet("{id:int}")]
         [Authorize(Policy = PolicyNames.HasNationality)]       // Policy-based authorization
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
