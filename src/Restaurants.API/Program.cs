@@ -17,10 +17,14 @@ builder.Services
 
 var app = builder.Build();
 
-var scope = app.Services.CreateScope();
-var seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    var seeder = scope.ServiceProvider
+        .GetRequiredService<IRestaurantSeeder>();
 
-await seeder.Seed();
+    await seeder.Seed();
+}
+
 // Configure the HTTP request pipeline.
 //app.UseSerilogRequestLogging();
 
